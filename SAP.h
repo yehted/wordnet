@@ -1,5 +1,4 @@
 #include <Digraph\Digraph\Digraph.h>
-#include <limits>
 
 class SAP {
 public:
@@ -11,7 +10,6 @@ public:
 	int ancestor(Bag<int>& v, Bag<int>& w);
 	
 private:
-	const int INF = std::numeric_limits<int>::max();
 	const Digraph G_;
 	int root_;
 	int distance_;

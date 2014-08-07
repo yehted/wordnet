@@ -1,4 +1,5 @@
 #include "SAP.h"
+#include <limits>
 #include <Digraph\Digraph\BreadthDirectedFirstPaths.h>
 #include <stdexcept>
 
@@ -23,7 +24,7 @@ int SAP::ancestor(int v, int w) {
 	BreadthFirstDirectedPaths s(G_, v);
 	BreadthFirstDirectedPaths t(G_, w);
 	root_ = -1;
-	distance_ = INF;
+	distance_ = std::numeric_limits<int>::max();
 	for (int i = 0; i < G_.V(); i++) {
 		if (s.hasPathTo(i) && t.hasPathTo(i)) {
 			if (s.distTo(i) + t.distTo(i) < distance_) {
@@ -47,7 +48,7 @@ int SAP::ancestor(Bag<int>& v, Bag<int>& w) {
 	BreadthFirstDirectedPaths s(G_, v);
 	BreadthFirstDirectedPaths t(G_, w);
 	root_ = -1;
-	distance_ = INF;
+	distance_ = std::numeric_limits<int>::max();
 	for (int i = 0; i < G_.V(); i++) {
 		if (s.hasPathTo(i) && t.hasPathTo(i)) {
 			if (s.distTo(i) + t.distTo(i) < distance_) {
