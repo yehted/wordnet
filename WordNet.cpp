@@ -15,8 +15,8 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 	}
 	int synid = 0;
 	string line;
-	while (getline(synsetIn, line)) {
-
+	while (!synsetIn.eof()) {
+		getline(synsetIn, line)
 	}
 	synsetIn.close();
 }
