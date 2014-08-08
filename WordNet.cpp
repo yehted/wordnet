@@ -1,10 +1,24 @@
 #include "WordNet.h"
 #include <stdexcept>
+#include <fstream>
+#include <iostream>
 
 WordNet::WordNet() {}
 
 WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new std::string[4]) {
+	using namespace std;
+	ifstream synsetIn;
+	synsetIn.open(synsets);
+	if (!synsetIn.is_open()) {
+		cerr << "File not opened!" << endl;
+		exit(1);
+	}
+	int synid = 0;
+	string line;
+	while (getline(synsetIn, line)) {
 
+	}
+	synsetIn.close();
 }
 
 Bag<std::string> WordNet::nouns() {
