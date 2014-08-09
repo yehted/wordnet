@@ -18,5 +18,6 @@ private:
 	Bag<std::string> nounset_;
 	Digraph G_;
 	std::string* synsetArray_;
+	int synsetArrayN_;
 	SAP wordsap_;
 };

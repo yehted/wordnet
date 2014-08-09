@@ -3,7 +3,8 @@
 #include <iostream>
 #include <cstdio>
 
-int main(int argc, char* argv[]) {
+// SAP test
+void SAP_test() {
 	using namespace std;
 	ifstream inFile;
 	inFile.open("digraph1.txt");
@@ -25,5 +26,9 @@ int main(int argc, char* argv[]) {
 	int ancestor = sap.ancestor(v, w);
 	printf("length = %d, ancestor = %d\n", length, ancestor);
 
+}
+
+int main(int argc, char* argv[]) {
+	SAP_test();
 	return 0;
 }
