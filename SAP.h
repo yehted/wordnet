@@ -1,3 +1,6 @@
+#ifndef SAP_H
+#define SAP_H
+
 #include <Digraph\Digraph\Digraph.h>
 
 class SAP {
@@ -17,3 +20,4 @@ private:
 	int root_;
 	int distance_;
 };
+#endif // !SAP_H

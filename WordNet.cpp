@@ -16,11 +16,22 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 		exit(1);
 	}
 	int synid = 0;
-	while (!synsetIn.eof()) {
-		string line;
-		getline(synsetIn, line, ',');
-		synid = stoi(line);
-		
+	string line;
+	while (getline(synsetIn, line)) {
+		if (line == "") break;
+		stringstream synsetSS(line);
+		string buffer;
+		Deque<string> synsetDQ;
+		while (getline(synsetSS, buffer, ','))
+			synsetDQ.addFirst(buffer);
+
+		// Checks parsing is correct
+		for (string s : synsetDQ)
+			cout << s << endl;
+
+		synid = stoi(synsetDQ.removeLast());
+		cout << "Synid: " << synid << endl;
+
 		// add synsetName to array for referencing from sap()
 		if (synid >= synsetArrayN_) {
 			string* synsetArrayCopy = new string[2 * synsetArrayN_];
@@ -30,14 +41,13 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 			synsetArrayN_ = 2 * synsetArrayN_;
 			synsetArray_ = synsetArrayCopy;
 		}
-		getline(synsetIn, line, ',');
+		line = synsetDQ.removeLast();
 		synsetArray_[synid] = line;
 		
 		// add all elements of synset into hash table
 		stringstream ssin(line);
-		string buffer;
 		Bag<string> synset;
-		while (ssin >> buffer)
+		while (getline(ssin, buffer, ' '))
 			synset.add(buffer);
 
 		for (string s : synset) {
@@ -54,6 +64,8 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 	synsetIn.close();
 	int count = synid + 1;
 	Digraph G(count);
+
+	cout << G << endl;
 
 	ifstream hypernymsIn;
 	hypernymsIn.open(hypernyms);

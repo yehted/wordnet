@@ -1,11 +1,15 @@
 #include "SAP.h"
+#include "WordNet.h"
 #include <fstream>
 #include <iostream>
 #include <cstdio>
+#include <string>
+
+using namespace std;
 
 // SAP test
 void SAP_test() {
-	using namespace std;
+	cout << "-- SAP test --" << endl;
 	ifstream inFile;
 	inFile.open("digraph1.txt");
 	//	inFile.open(argv[1]);
@@ -28,7 +32,26 @@ void SAP_test() {
 
 }
 
+// WordNet test
+void WordNet_test() {
+	cout << "-- WordNet test --" << endl;
+	string synsetsFile = "synsets8.txt";
+	string hypernymsFile = "hypernyms8ManyAncestors.txt";
+
+	WordNet word(synsetsFile, hypernymsFile);
+	string a, b;
+	cout << "First word: ";
+	cin >> a;
+	cout << "Second word: ";
+	cin >> b;
+	int d = word.distance(a, b);
+	string anc = word.sap(a, b);
+	cout << d << " = distance between " << a << " and " << b << endl;
+	cout << anc << " = common ancestor between " << a << " and " << b << endl;
+}
+
 int main(int argc, char* argv[]) {
-	SAP_test();
+//	SAP_test();
+	WordNet_test();
 	return 0;
 }
