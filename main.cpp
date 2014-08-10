@@ -35,19 +35,21 @@ void SAP_test() {
 // WordNet test
 void WordNet_test() {
 	cout << "-- WordNet test --" << endl;
-	string synsetsFile = "synsets8.txt";
-	string hypernymsFile = "hypernyms8ManyAncestors.txt";
+	string synsetsFile = "files/synsets.txt";
+	string hypernymsFile = "files/hypernyms.txt";
 
 	WordNet word(synsetsFile, hypernymsFile);
 	string a, b;
-	cout << "First word: ";
-	cin >> a;
-	cout << "Second word: ";
-	cin >> b;
-	int d = word.distance(a, b);
-	string anc = word.sap(a, b);
-	cout << d << " = distance between " << a << " and " << b << endl;
-	cout << anc << " = common ancestor between " << a << " and " << b << endl;
+	while (true) {
+		cout << "First word: ";
+		cin >> a;
+		cout << "Second word: ";
+		cin >> b;
+		int d = word.distance(a, b);
+		string anc = word.sap(a, b);
+		cout << d << " = distance between " << a << " and " << b << endl;
+		cout << anc << " = common ancestor between " << a << " and " << b << endl;
+	}
 }
 
 int main(int argc, char* argv[]) {

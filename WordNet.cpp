@@ -9,6 +9,7 @@ WordNet::WordNet() {}
 
 WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new std::string[4]), synsetArrayN_(4) {
 	using namespace std;
+	ios::sync_with_stdio(false);
 	ifstream synsetIn;
 	synsetIn.open(synsets);
 	if (!synsetIn.is_open()) {
@@ -25,12 +26,7 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 		while (getline(synsetSS, buffer, ','))
 			synsetDQ.addFirst(buffer);
 
-		// Checks parsing is correct
-		for (string s : synsetDQ)
-			cout << s << endl;
-
 		synid = stoi(synsetDQ.removeLast());
-		cout << "Synid: " << synid << endl;
 
 		// add synsetName to array for referencing from sap()
 		if (synid >= synsetArrayN_) {
@@ -65,8 +61,6 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 	int count = synid + 1;
 	Digraph G(count);
 
-	cout << G << endl;
-
 	ifstream hypernymsIn;
 	hypernymsIn.open(hypernyms);
 	if (!hypernymsIn.is_open()) {
@@ -75,24 +69,28 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 	}
 
 	// Builds Digraph
-	while (!hypernymsIn.eof()) {
-		string line;
-		getline(hypernymsIn, line);
+	while (getline(hypernymsIn, line)) {
+		if (line == "") break;
+
 		stringstream ssin(line);
-		bool vertex = true;
+		
 		string s;
-		Bag<int> edges;
-		while (getline(ssin, s, ',')){
-			if (vertex) {
-				synid = stoi(s);
-				vertex = false;
-			}
-			else edges.add(stoi(s));
-		}
+		Deque<int> edges;
+		while (getline(ssin, s, ','))
+			edges.addFirst(stoi(s));
+		
+		// Checks parsing is correct
+		/*for (int s : edges)
+			cout << s << " ";
+		cout << endl;*/
+
+		synid = edges.removeLast();
 		for (int i : edges)
 			G.addEdge(synid, i);
-		if (edges.size() > 1) count--;
+		if (edges.size() > 0) count--;
 	}
+
+	hypernymsIn.close();
 
 	// check for cycles
 	DirectedCycle finder(G);

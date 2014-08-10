@@ -16,7 +16,7 @@ public:
 	int ancestor(Bag<int>& v, Bag<int>& w);
 	
 private:
-	const Digraph* G_;
+	Digraph G_;
 	int root_;
 	int distance_;
 };
