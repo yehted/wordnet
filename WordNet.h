@@ -7,6 +7,9 @@
 class WordNet{
 public:
 	WordNet();
+	~WordNet();
+	WordNet(const WordNet& other);
+	WordNet& operator=(const WordNet& other);
 	WordNet(std::string synsets, std::string hypernyms);
 	Bag<std::string> nouns();
 	bool isNoun(std::string word);

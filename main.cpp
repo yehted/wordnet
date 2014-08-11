@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include "vld.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ void WordNet_test() {
 
 	WordNet word(synsetsFile, hypernymsFile);
 	string a, b;
-	while (true) {
+	for (int i = 0; i < 3; i++) {
 		cout << "First word: ";
 		cin >> a;
 		cout << "Second word: ";

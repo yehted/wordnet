@@ -102,6 +102,40 @@ WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new 
 	wordsap_ = SAP(G);
 }
 
+WordNet::~WordNet() {
+	delete[] synsetArray_;
+}
+
+WordNet::WordNet(const WordNet& other) : 
+	st_(SeparateChainingHashST<std::string, Bag<int>>(other.st_)), 
+	nounset_(Bag<std::string>(other.nounset_)),
+	G_(other.G_),
+	synsetArray_(new std::string[other.synsetArrayN_]),
+	synsetArrayN_(other.synsetArrayN_),
+	wordsap_(wordsap_) 
+{
+	for (int i = 0; i < synsetArrayN_; i++)
+		synsetArray_[i] = other.synsetArray_[i];
+}
+
+WordNet& WordNet::operator=(const WordNet& other) {
+	if (&other == this) return *this;
+	st_ = other.st_;
+	nounset_ = other.nounset_;
+	G_ = other.G_;
+	synsetArrayN_ = other.synsetArrayN_;
+	wordsap_ = other.wordsap_;
+	
+	delete[] synsetArray_;
+	std::string* tempSSA = new std::string[synsetArrayN_];
+
+	for (int i = 0; i < synsetArrayN_; i++)
+		tempSSA[i] = other.synsetArray_[i];
+	synsetArray_ = tempSSA;
+
+	return *this;
+}
+
 Bag<std::string> WordNet::nouns() {
 	return nounset_;
 }
