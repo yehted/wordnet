@@ -10,6 +10,7 @@ WordNet::WordNet() {}
 WordNet::WordNet(std::string synsets, std::string hypernyms) : synsetArray_(new std::string[4]), synsetArrayN_(4) {
 	using namespace std;
 	ios::sync_with_stdio(false);
+	ifstream::sync_with_stdio(false);
 	ifstream synsetIn;
 	synsetIn.open(synsets);
 	if (!synsetIn.is_open()) {

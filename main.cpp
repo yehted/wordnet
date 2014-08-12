@@ -1,5 +1,6 @@
 #include "SAP.h"
 #include "WordNet.h"
+#include "Outcast.h"
 #include <fstream>
 #include <iostream>
 #include <cstdio>
@@ -12,7 +13,7 @@ using namespace std;
 void SAP_test() {
 	cout << "-- SAP test --" << endl;
 	ifstream inFile;
-	inFile.open("digraph1.txt");
+	inFile.open("files/digraph1.txt");
 	//	inFile.open(argv[1]);
 	if (!inFile.is_open()) {
 		cerr << "File not opened!" << endl;
@@ -46,6 +47,8 @@ void WordNet_test() {
 		cin >> a;
 		cout << "Second word: ";
 		cin >> b;
+		//a = "Black_Plague";
+		//b = "black_marlin";
 		int d = word.distance(a, b);
 		string anc = word.sap(a, b);
 		cout << d << " = distance between " << a << " and " << b << endl;
@@ -53,8 +56,55 @@ void WordNet_test() {
 	}
 }
 
+// Outcast test
+void Outcast_test() {
+	cout << "-- Outcast test --" << endl;
+	string synsetsFile = "files/synsets.txt";
+	string hypernymsFile = "files/hypernyms.txt";
+	WordNet wordnet(synsetsFile, hypernymsFile);
+	Outcast outcast(wordnet);
+
+	ifstream inFile;
+	string file = "files/outcast11.txt";
+	inFile.open(file);
+	//	inFile.open(argv[1]);
+	if (!inFile.is_open()) {
+		cerr << file << " not opened!" << endl;
+		exit(1);
+	}
+	string buffer;
+	int N = 0;
+	Bag<std::string> bag;
+	while (getline(inFile, buffer)) {
+		if (buffer == "") break;
+		bag.add(buffer);
+		N++;
+	}
+	
+	std::string* words = new std::string[N];
+	int i = 0;
+	for (string s : bag) {
+		words[i] = s;
+		i++;
+	}
+
+	//int N;
+	//cout << "Number of words: ";
+	//cin >> N;
+
+	//for (int i = 0; i < N; i++) {
+	//	cout << "Word " << i + 1 << ": ";
+	//	cin >> words[i];
+	//}
+	//cout << endl;
+
+	cout << "Outcast: " << outcast.outcast(words, N) << endl;
+	delete[] words;
+}
+
 int main(int argc, char* argv[]) {
 //	SAP_test();
-	WordNet_test();
+//	WordNet_test();
+	Outcast_test();
 	return 0;
 }

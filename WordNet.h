@@ -1,3 +1,6 @@
+#ifndef WORDNET_H
+#define WORDNET_H
+
 #include <SymbolTable\SymbolTable\SeparateChainingHashST.h>
 #include <Bag\Bag\Bag.h>
 #include <Digraph\Digraph\Digraph.h>
@@ -24,3 +27,4 @@ private:
 	int synsetArrayN_;
 	SAP wordsap_;
 };
+#endif // !WORDNET_H
