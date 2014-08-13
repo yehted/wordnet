@@ -63,43 +63,49 @@ void Outcast_test() {
 	string hypernymsFile = "files/hypernyms.txt";
 	WordNet wordnet(synsetsFile, hypernymsFile);
 	Outcast outcast(wordnet);
+	string file;
+	cout << "Filename: (exit to quit)";
+	while (cin >> file) {
+		if (file == "exit") break;
+		ifstream inFile;
+//		string file = "files/outcast17.txt";
+		inFile.open(file);
+		//	inFile.open(argv[1]);
+		if (!inFile.is_open()) {
+			cerr << file << " not opened!" << endl;
+			exit(1);
+		}
+		string buffer;
+		int N = 0;
+		Bag<std::string> bag;
+		while (getline(inFile, buffer)) {
+			if (buffer == "") break;
+			bag.add(buffer);
+			N++;
+		}
+		inFile.close();
 
-	ifstream inFile;
-	string file = "files/outcast11.txt";
-	inFile.open(file);
-	//	inFile.open(argv[1]);
-	if (!inFile.is_open()) {
-		cerr << file << " not opened!" << endl;
-		exit(1);
+		std::string* words = new std::string[N];
+		int i = 0;
+		for (string s : bag) {
+			words[i] = s;
+			i++;
+		}
+
+		//int N;
+		//cout << "Number of words: ";
+		//cin >> N;
+
+		//for (int i = 0; i < N; i++) {
+		//	cout << "Word " << i + 1 << ": ";
+		//	cin >> words[i];
+		//}
+		//cout << endl;
+
+		cout << "Outcast: " << outcast.outcast(words, N) << endl;
+		delete[] words;
+		cout << "Filename: ";
 	}
-	string buffer;
-	int N = 0;
-	Bag<std::string> bag;
-	while (getline(inFile, buffer)) {
-		if (buffer == "") break;
-		bag.add(buffer);
-		N++;
-	}
-	
-	std::string* words = new std::string[N];
-	int i = 0;
-	for (string s : bag) {
-		words[i] = s;
-		i++;
-	}
-
-	//int N;
-	//cout << "Number of words: ";
-	//cin >> N;
-
-	//for (int i = 0; i < N; i++) {
-	//	cout << "Word " << i + 1 << ": ";
-	//	cin >> words[i];
-	//}
-	//cout << endl;
-
-	cout << "Outcast: " << outcast.outcast(words, N) << endl;
-	delete[] words;
 }
 
 int main(int argc, char* argv[]) {

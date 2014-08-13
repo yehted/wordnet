@@ -2,6 +2,7 @@
 #define SAP_H
 
 #include <Digraph\Digraph\Digraph.h>
+#include <Digraph\Digraph\BreadthDirectedFirstPaths.h>
 
 class SAP {
 public:
@@ -17,6 +18,8 @@ public:
 	
 private:
 	Digraph G_;
+	BreadthFirstDirectedPaths bfdp1_;	// for optimization
+	BreadthFirstDirectedPaths bfdp2_;	// for optimization
 	int root_;
 	int distance_;
 };
